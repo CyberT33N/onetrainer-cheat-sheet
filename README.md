@@ -4,6 +4,8 @@
 # Install
 - https://github.com/Nerogar/OneTrainer
 ```shell
+cd ~/Projects
+
 git clone git clone https://github.com/Nerogar/OneTrainer.git
 cd OneTrainer
 
@@ -14,6 +16,19 @@ pyenv local 3.10
 ./start-ui.sh
 ```
 
+<br><br>
+
+# Re-start
+```shell
+cd ~/Projects/OneTrainer
+
+deactivate
+rm -rf venv
+
+pyenv local 3.10
+
+./start-ui.sh
+```
 
 
 
