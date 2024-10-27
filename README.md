@@ -101,10 +101,12 @@ SD 1.5 - Hyper Realism V3 : https://civitai.com/api/download/models/292213?token
 ## Photorealistic Person
 
 1. [GENERAL Tab]
+
   1.1 Set new workspace directory and cache directory
   1.2 Disable tensorboard not realy needed (TensorBoard generates real-time graphs that display the training metrics)
 
-2. [MODEL TAB]
+3. [MODEL TAB]
+
   2.1 Select Base Model
     - SDXL- RealVisXL_V4 or SD 1.5 - Hyper Realism V3
     - **When you use custom models like this do not choose VAE**
