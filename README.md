@@ -152,6 +152,9 @@ SD 1.5 - Hyper Realism V3 : https://civitai.com/api/download/models/292213?token
      mogrify -resize 1024x1024 -background white -gravity center -extent 1024x1024 *
      ```
 
+  - What is a good dataset for training images?
+    - https://github.com/CyberT33N/machine-learning-cheat-sheet/blob/main/README.md#dataset 
+
 - 4.13 Prompt source
 - **If you have low amount of pictures like 10-20 images OR/AND if you are training a person it is not recommended to create captions for each image because it will reduce the likeliness of the model.**
 
@@ -393,6 +396,9 @@ SD 1.5 - Hyper Realism V3 : https://civitai.com/api/download/models/292213?token
 <br><br>
 
 - 6. [TOOLS TAB]
+ 
+  [MASKED TRAINING]
+  - **Adding masked training will cause anatomy problems but the quality will be better when your dataset for training is low quality. So if you have a really good dataset do not use maskedm training and skip the steps below**
 
   - 6.1 Use `Dataset Tools` and open folder of training images
 
@@ -479,19 +485,97 @@ SD 1.5 - Hyper Realism V3 : https://civitai.com/api/download/models/292213?token
 
 <br><br>
 
-- 12. Start stable-diffusion-webui
+- 12. Start stable-diffusion-webui (http://127.0.0.1:7860)
 
   - 12.1 Load checkpoint `yourname.safetensors`
 
-  - 12.1.1 Use:
-  ```
-  1024x1024
-  Sampling Steps: 40
-  CFG Scale: 7
-  Sampling Method: DPM++ 2M SDE
-  Schedule Type: Karras
-
-  positive: hyper-realistic photo of a smiling 27-year-old man with short brown hair lying on the floor of a luxurious penthouse apartment, surrounded by adorable kittens playing on him, capturing their playful interaction, with the man looking directly into the camera, sharp facial details, deep texture, ultra-high-definition, natural lighting
+  - 12.1.2
+    - Check your generated sample for best results and then choose a checkpoint
+      - For some cases 150 epochs is a sweet spot. In my case 300 was good with 11 low images which ym cp was trained
   
-  negative: blurry, grainy, low-res, cartoonish, overexposed, unrealistic, digital artifacts, unnatural lighting, over-sharpened, harsh shadows
-  ```
+      General:
+      ```
+      1024x1024
+  
+      prompt: Photo of an ohwx man standing on the beach, wearing a well-fitted shirt. The lighting is perfect, capturing a natural sunset glow, like a candid iPhone photograph. High photorealism, with smooth skin texture, slight wrinkles, and a relaxed facial expression. Background shows soft waves and a sandy shoreline, with gentle sunlight highlighting his face. Fine details on shirt texture, hair, and surroundings; realistic depth of field.
+  
+      negative: Digital art, CGI, cartoon, anime, illustration, overexposed, underexposed, low resolution, blurry, washed-out colors, surreal, unrealistic proportions, excessive shadow, extreme HDR, exaggerated emotions, unnatural lighting, excessive retouching, robotic, uncanny valley, 3D render, watermark, text, noise, grain, distortion, artifacts, artificial, studio lighting, harsh shadows.
+  
+      sample: 40
+      Sampling Method: DPM++ 2M SDE
+      cfg scale: 7
+      batch count 4
+      ```
+      - For alternative prompts check:
+        - https://github.com/CyberT33N/stable-diffusion-cheat-sheet/blob/main/README.md#prompts  
+    
+      <br>
+  
+      AIDetailer:
+      - Enable it to give better quality. It totally depends on your training how much it will make your result better
+      ```
+      prompt: photo of ohwx man slightly smiling
+  
+      detection set `Mask only the top k target:1`:
+      - help you to detect face when there are multiple people
+  
+      inpainting:
+      - Inpainting denosing strength 0.35
+        - In my case everything above will crash above 0.5
+        - Also notice the higher you go the more sharpen it will get and less natural it will look
+  
+      - ENABLEA AND Use seperate steps: 70
+        - Will improve quality of the face
+      ```
+ 
+      <br>
+  
+      Upscaler (Hires, fix):
+      - If needed you can upscale your image
+        - **It maybe deform your face when using it. Be carefully**
+      ```
+      Choose:
+        - R-ESRGAN 4x plus and upscale 1.25
+        - Maybe change denoise strength
+      ```
+
+      <br>
+  
+      - SDXL Styles:
+        - Dependening on your training data and model quality this style maybe make it looks good:
+          - HDR
+          - Hyperrealism
+  
+      - Extend if needed with using Loras..
+
+  <br><br>
+  
+  - 13. Checkpoint comparsion
+    - **For me with 11 not good Images the best result was checkpoint with epoch 300**
+  
+    - Go to bottom to scripts and choose `x/y/z plot`
+      - X type: `checkpoint name` and select all checkpoints
+      - Choose `50 grid margins` and at top choose `Batch count: 4` for 4 images
+  
+    - Images will be saved to stable-diffusion-webui/output/txt2img-images and to txt2img-grid
+      - In txt2img-grid will be aswell the big png file
+  
+      - Check which checkpoint seems to be the best for you
+        - If e.g. quality of clothing is degrading you know it is overtrained
+          
+  <br><br>
+  
+  - 14. Good 2 know
+    - **In my case for 11 training images with 400 epochs the best checkpoint was at 300**
+  
+    - There is a trade-off between the likeliness and the flexibility
+      - So if you want more likeliness you need to do more train and it will become less flexible
+  
+    - **If you want to add expressions like slight smiling then add it to the prompt in AIDetailer**
+  
+  <br><br>
+
+  - 15. Inpaint
+    - If you want to add e.g. manually face impressions and get better results then:
+      - Go to generation > Inpaint and select your face
+    
