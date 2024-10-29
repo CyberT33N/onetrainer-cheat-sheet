@@ -497,9 +497,18 @@ SD 1.5 - Hyper Realism V3 : https://civitai.com/api/download/models/292213?token
       ```
       1024x1024
   
-      prompt: Photo of an ohwx man standing on the beach, wearing a well-fitted shirt. The lighting is perfect, capturing a natural sunset glow, like a candid iPhone photograph. High photorealism, with smooth skin texture, slight wrinkles, and a relaxed facial expression. Background shows soft waves and a sandy shoreline, with gentle sunlight highlighting his face. Fine details on shirt texture, hair, and surroundings; realistic depth of field.
+      prompt: (candid photography:1.2), 4k photograph of a ohwx men, casual business clothes,
+      shot on Canon EOS R5, 85mm f/1.4 lens, unedited RAW photo,
+      realistic skin texture,
+      (crisp details:1.5), (high definition:2), (sharp focus)
+      (soft shadows:1.25),
+      (color temperature 4000K), (golden hour lighting:2), (natural lighting:5)
   
-      negative: Digital art, CGI, cartoon, anime, illustration, overexposed, underexposed, low resolution, blurry, washed-out colors, surreal, unrealistic proportions, excessive shadow, extreme HDR, exaggerated emotions, unnatural lighting, excessive retouching, robotic, uncanny valley, 3D render, watermark, text, noise, grain, distortion, artifacts, artificial, studio lighting, harsh shadows.
+      negative: (hyper-detailed:2), (ultra high resolution), (8K), (HDR:2), (over-sharpened),
+      (CGI), (plastic skin), (digital art),
+      (smooth:3), (too perfect), (fake), (overexposed), (low contrast),
+      (digital artifacts), (extra fingers), (mutated limbs),
+      glasses
   
       sample: 40
       Sampling Method: DPM++ 2M SDE
@@ -576,6 +585,13 @@ SD 1.5 - Hyper Realism V3 : https://civitai.com/api/download/models/292213?token
   <br><br>
 
   - 15. Inpaint
-    - If you want to add e.g. manually face impressions and get better results then:
-      - Go to generation > Inpaint and select your face
+    - If you want to add e.g. manually face impressions and get better results then use inpaint by click on the color icon under your generated image and then you will be in the Inpaint area
+      - Carefully mask the face and use prompt: `slightly smiling photo of ohwx man`
+      - Select `only masked`
+      - Select sampler DPM++ 2M SDE Karras, Steps 60, Denoising Strength 0.35
+      - Make seed random that you get different results and pick the best one
+      - 1024x1024
+
+
+
     
